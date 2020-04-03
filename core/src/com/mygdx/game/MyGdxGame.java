@@ -50,4 +50,8 @@ public class MyGdxGame extends Game {
 		loadingScreen = new LoadingScreen(this);
 		setScreen(loadingScreen);
 	}
+	public AppPreferences getPreferences()
+	{
+		return new AppPreferences();
+	}
 }
