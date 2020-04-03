@@ -3,10 +3,12 @@ package com.mygdx.game.views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGdxGame;
 
@@ -21,6 +23,12 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         stage.act(Math.min(Gdx.graphics.getDeltaTime() , 1 / 30f));
         stage.draw();
+
+
+    }
+
+    @Override
+    public void show() {
         Table table = new Table();
         table.setFillParent(true);
         table.setDebug(true);
@@ -35,12 +43,24 @@ public class MenuScreen implements Screen {
         table.row();
         table.add(exit).fillX().uniformX();
         System.out.println("MEnu screen");
-
-    }
-
-    @Override
-    public void show() {
-
+        exit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+        newGame.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(MyGdxGame.APPLICATION);
+            }
+        });
+        prefferences.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(MyGdxGame.PREFERENCES);
+            }
+        });
     }
 
     @Override
@@ -74,6 +94,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }
