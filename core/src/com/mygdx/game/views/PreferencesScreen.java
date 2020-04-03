@@ -93,12 +93,12 @@ public class PreferencesScreen implements Screen {
         });
 
         titleLabel = new Label( "Preferences", skin );
-        volumeMusicLabel = new Label( null, skin );
-        volumeSoundLabel = new Label( null, skin );
-        musicOnOffLabel = new Label( null, skin );
-        soundOnOffLabel = new Label( null, skin );
+        volumeMusicLabel = new Label( "Music volume", skin );
+        volumeSoundLabel = new Label( "Sound volume", skin );
+        musicOnOffLabel = new Label( "Music", skin );
+        soundOnOffLabel = new Label( "Sound", skin );
 
-        table.add(titleLabel);
+        table.add(titleLabel).colspan(2);
         table.row();
         table.add(volumeMusicLabel);
         table.add(volumeMusicSlider);
@@ -112,7 +112,7 @@ public class PreferencesScreen implements Screen {
         table.add(soundOnOffLabel);
         table.add(soundCheckbox);
         table.row();
-        table.add(backButton);
+        table.add(backButton).colspan(2);
 
 
     }
