@@ -20,7 +20,7 @@ public class MenuScreen implements Screen {
     public MenuScreen(MyGdxGame g) {
         parent = g;
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+
         stage.act(Math.min(Gdx.graphics.getDeltaTime() , 1 / 30f));
         stage.draw();
 
@@ -29,6 +29,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
         Table table = new Table();
         table.setFillParent(true);
         table.setDebug(true);
