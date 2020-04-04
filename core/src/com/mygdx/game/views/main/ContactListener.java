@@ -24,6 +24,16 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
         Fixture b = contact.getFixtureB();
         System.out.println(a.getBody().getType()+" has hit "+b.getBody().getType());
 
+        if(a.getBody().getUserData() == "WATER"){
+            parent.isSwimming = true;
+            // we will ad some code here to say our player is in the water
+            return;
+        }else if(b.getBody().getUserData() == "WATER"){
+            parent.isSwimming = true;;
+            // we will ad some code here to say our player is in the water
+            return;
+        }
+
         if(a.getBody().getType() == BodyDef.BodyType.StaticBody){
             this.shootUpInAir(a, b);
         }else if(b.getBody().getType() == BodyDef.BodyType.StaticBody){
@@ -35,7 +45,16 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
 
     @Override
     public void endContact(Contact contact) {
-
+        System.out.println("Contact");
+        Fixture fa = contact.getFixtureA();
+        Fixture fb = contact.getFixtureB();
+        if(fa.getBody().getUserData() == "WATER"){
+            parent.isSwimming = false;
+            return;
+        }else if(fb.getBody().getUserData() == "WATER"){
+            parent.isSwimming = false;
+            return;
+        }
     }
 
     @Override

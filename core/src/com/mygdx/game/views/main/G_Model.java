@@ -11,6 +11,9 @@ public class G_Model {
     private Body stati; //static body
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
+    public boolean isSwimming = false;
+    private Body player;
+
 
     public G_Model()
     {
@@ -23,16 +26,22 @@ public class G_Model {
         // get our body factory singleton and store it in bodyFactory
         BodyFactory bodyFactory = BodyFactory.getInstance(world);
 
-        Body player  = bodyFactory.makeBoxPolyBody(1 , 1, 2, 2 , BodyFactory.RUBBER , BodyDef.BodyType.DynamicBody , false);
+        player  = bodyFactory.makeBoxPolyBody(1 , 1, 2, 2 , BodyFactory.RUBBER , BodyDef.BodyType.DynamicBody , false);
 
         // add some water
         Body water =  bodyFactory.makeBoxPolyBody(1, -8, 40, 4, BodyFactory.RUBBER, BodyDef.BodyType.StaticBody,false);
 
         // make the water a sensor so it doesn't obstruct our player
         bodyFactory.makeAllFixturesSensors(water);
+        water.setUserData("WATER");
     }
     public void logicStep(float delta)
     {
+        if(isSwimming)
+        {
+            player.applyForceToCenter(0 , 5 , true);
+        }
+
         world.step(delta , 3 , 3);
     }
     private void createObject(){
