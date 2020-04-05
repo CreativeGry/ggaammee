@@ -16,10 +16,15 @@ public class MenuScreen implements Screen {
 
     private MyGdxGame parent;
     private Stage stage;
+    private Skin skin;
 
     public MenuScreen(MyGdxGame g) {
         parent = g;
         stage = new Stage(new ScreenViewport());
+
+        parent.assManager.queueAddSkin();
+        parent.assManager.manager.finishLoading();
+        skin = parent.assManager.manager.get("input/game/skins/glass/glassy-ui.json");
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime() , 1 / 30f));
         stage.draw();
@@ -32,9 +37,9 @@ public class MenuScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(false);
         stage.addActor(table);
-        Skin skin = new Skin(Gdx.files.internal("glassy-ui.json"));
+
         TextButton newGame = new TextButton("New Game" , skin);
         TextButton prefferences = new TextButton("Prefferences" , skin);
         TextButton exit = new TextButton("Exit" , skin);
@@ -61,6 +66,7 @@ public class MenuScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 parent.changeScreen(MyGdxGame.PREFERENCES);
+
             }
         });
     }

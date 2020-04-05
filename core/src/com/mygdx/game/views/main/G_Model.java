@@ -1,11 +1,18 @@
 package com.mygdx.game.views.main;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.controller.KeyBoardController;
+import com.mygdx.game.loader.AssestManager;
 
 public class G_Model {
+
+    public static final int KEYS_SOUND = 0;
+    public static final int PICK_SOUND = 1;
     public World world;
     private Body bp; //player
     private Body floor; //floor
@@ -13,13 +20,20 @@ public class G_Model {
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera camera;
     public boolean isSwimming = false;
-    private Body player;
+    public Body player;
     private KeyBoardController controller;
+    private AssestManager assestManager;
+    private Sound pick;
+    private MainScreen parent;
+
+    //private Sound keys;
 
 
 
-    public G_Model(KeyBoardController controller , OrthographicCamera cam)
+    public G_Model(KeyBoardController controller , OrthographicCamera cam , AssestManager ass , MainScreen mainScreen)
     {
+        parent = mainScreen;
+        assestManager = ass;
         world = new World(new Vector2(0 , -10f) , true);
         world.setContactListener(new  ContactListener(this));
         camera = cam;
@@ -28,15 +42,20 @@ public class G_Model {
 
         // get our body factory singleton and store it in bodyFactory
         BodyFactory bodyFactory = BodyFactory.getInstance(world);
+        //assestManager.queueAddSounds();
+        player  = bodyFactory.makeBoxPolyBody(1 , 1, 2, 2 , BodyFactory.WOOD , BodyDef.BodyType.DynamicBody , false);
+        //assestManager.manager.finishLoading();
 
-        player  = bodyFactory.makeBoxPolyBody(1 , 1, 2, 2 , BodyFactory.RUBBER , BodyDef.BodyType.DynamicBody , false);
 
+
+        //pick = assestManager.manager.get("sounds/pick.wav" , Sound.class);
+        //keys = assestManager.manager.get("sounds/keys.wav" , Sound.class);
         // add some water
-        Body water =  bodyFactory.makeBoxPolyBody(1, -8, 40, 4, BodyFactory.RUBBER, BodyDef.BodyType.StaticBody,false);
+        //Body water =  bodyFactory.makeBoxPolyBody(1, -8, 40, 4, BodyFactory.RUBBER, BodyDef.BodyType.StaticBody,false);
 
         // make the water a sensor so it doesn't obstruct our player
-        bodyFactory.makeAllFixturesSensors(water);
-        water.setUserData("WATER");
+        //bodyFactory.makeAllFixturesSensors(water);
+        //water.setUserData("WATER");
     }
     public void logicStep(float delta)
     {
@@ -49,6 +68,12 @@ public class G_Model {
             player.applyForceToCenter(0, 10,true);
         }else if(controller.down){
             player.applyForceToCenter(0, -10,true);
+        }else if(controller.escape)
+        {
+            //parent.parent.changeScreen(MyGdxGame.MENU);
+            Gdx.app.debug("Exit" , "Exit with listen the key 'escape'");
+            Gdx.app.exit();
+
         }
 
         if(controller.isMouse1Down && controller.pointIntersectsBody(player,controller.mouseLocation)){
@@ -136,6 +161,10 @@ public class G_Model {
 
         stati.setLinearVelocity(0, 0.75f);
         //Siema
+    }
+
+    public void playSound(int sound){
+
     }
 
 }

@@ -12,9 +12,11 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
         parent = model;
     }
 
+
     private void shootUpInAir(Fixture staticFixture, Fixture otherFixture){
         System.out.println("Adding Force");
-        otherFixture.getBody().applyForceToCenter(new Vector2(00000,100000), true);
+        otherFixture.getBody().applyForceToCenter(new Vector2(00000,10), true);
+        //parent.playSound(G_Model.PICK_SOUND);
     }
 
     @Override
@@ -35,9 +37,9 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
         }
 
         if(a.getBody().getType() == BodyDef.BodyType.StaticBody){
-            //this.shootUpInAir(a, b);
+            this.shootUpInAir(a, b);
         }else if(b.getBody().getType() == BodyDef.BodyType.StaticBody){
-            //this.shootUpInAir(b, a);
+            this.shootUpInAir(b, a);
         }else{
             // neither a nor b are static so do nothing
         }

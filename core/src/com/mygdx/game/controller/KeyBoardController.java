@@ -12,6 +12,7 @@ public class KeyBoardController implements InputProcessor {
     public boolean left,right,down,up;
     public boolean isMouse1Down , isMouse2Down ,isMouse3Down;
     public boolean isDragged;
+    public boolean escape = false;
     public Vector2 mouseLocation = new Vector2();
     private OrthographicCamera camera;
 
@@ -41,6 +42,11 @@ public class KeyBoardController implements InputProcessor {
             case Input.Keys.DOWN: 	// if keycode is the same as Keys.LEFT a.k.a 20
                 down = true;	// do this
                 keyProcessed = true;// we have reacted to a keypress
+            case Input.Keys.ESCAPE :
+                escape = true;
+                break;
+
+
         }
         return keyProcessed;	//  return our peyProcessed flag
     }

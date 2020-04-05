@@ -37,9 +37,9 @@ public class PreferencesScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(false);
         stage.addActor(table);
-        Skin skin = new Skin(Gdx.files.internal("glassy-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("input/game/skins/glass/glassy-ui.json"));
 
         final Slider volumeMusicSlider = new Slider( 0f, 1f, 0.1f,false, skin );
         volumeMusicSlider.setValue( parent.getPreferences().getMusicVolume() );

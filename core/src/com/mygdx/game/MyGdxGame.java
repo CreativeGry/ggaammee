@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.mygdx.game.loader.AssestManager;
 import com.mygdx.game.views.*;
 import com.mygdx.game.views.main.MainScreen;
 
@@ -11,6 +12,9 @@ public class MyGdxGame extends Game {
 	private MainScreen mainScreen;
 	private MenuScreen menuScreen;
 	private EndScreen endScreen;
+	private AppPreferences preferences = new AppPreferences();
+
+	public AssestManager assManager = new AssestManager();
 
 	public static final int MENU = 0;
 	public static final int PREFERENCES = 1;
@@ -48,6 +52,13 @@ public class MyGdxGame extends Game {
 	}
 	public AppPreferences getPreferences()
 	{
-		return new AppPreferences();
+
+		return preferences;
+	}
+
+	@Override
+	public void dispose()
+	{
+		assManager.manager.dispose();
 	}
 }
