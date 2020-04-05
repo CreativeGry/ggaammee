@@ -3,6 +3,7 @@ package com.mygdx.game.views.main;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.controller.KeyBoardController;
 
 public class G_Model {
     public World world;
@@ -13,15 +14,17 @@ public class G_Model {
     private OrthographicCamera camera;
     public boolean isSwimming = false;
     private Body player;
+    private KeyBoardController controller;
 
 
-    public G_Model()
+
+    public G_Model(KeyBoardController controller , OrthographicCamera cam)
     {
         world = new World(new Vector2(0 , -10f) , true);
         world.setContactListener(new  ContactListener(this));
+        camera = cam;
+        this.controller = controller;
         createFloor();
-//        createObject();
-//        createMovingObject();
 
         // get our body factory singleton and store it in bodyFactory
         BodyFactory bodyFactory = BodyFactory.getInstance(world);
@@ -37,6 +40,21 @@ public class G_Model {
     }
     public void logicStep(float delta)
     {
+
+        if(controller.left){
+            player.applyForceToCenter(-10, 0,true);
+        }else if(controller.right){
+            player.applyForceToCenter(10, 0,true);
+        }else if(controller.up){
+            player.applyForceToCenter(0, 10,true);
+        }else if(controller.down){
+            player.applyForceToCenter(0, -10,true);
+        }
+
+        if(controller.isMouse1Down && controller.pointIntersectsBody(player,controller.mouseLocation)){
+            System.out.println("Player was clicked");
+        }
+
         if(isSwimming)
         {
             player.applyForceToCenter(0 , 5 , true);
