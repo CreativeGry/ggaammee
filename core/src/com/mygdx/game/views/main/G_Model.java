@@ -117,6 +117,7 @@ public class G_Model {
         shape.dispose();
 
         stati.setLinearVelocity(0, 0.75f);
+        //Siema
     }
 
 }
